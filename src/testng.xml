@@ -9,7 +9,7 @@
         <parameter name="browser" value="chrome"></parameter>
         <!--Test Class which has test scrip can be defined here -->
         <classes>
-            <class name="com.automation.test.ShopForSpecificSeasonalProductTest"/>
+            <class name="com.automation.test.TC001_ShopForSpecificSeasonalProductTest"/>
         </classes>
     </test>
 
@@ -18,7 +18,7 @@
         <!--Test level parameters can be defined here -->
         <parameter name="browser" value="edge"></parameter>
         <classes>
-            <class name="com.automation.test.ShopForSpecificSeasonalProductTest"/>
+            <class name="com.automation.test.TC001_ShopForSpecificSeasonalProductTest"/>
         </classes>
     </test>
 </suite>
