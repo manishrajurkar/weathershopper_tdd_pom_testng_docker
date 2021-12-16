@@ -17,7 +17,10 @@ All you need to do is to run the below command to build the project using Maven
 1.git clone https://github.com/manishrajurkar87/weathershopper.git
 
 # Navigate to the location where pom.xml file is present
-2. mvn clean install
+2.cd weathershopper/  
+
+# Run maven command
+3.mvn clean install
 ```
 
 
