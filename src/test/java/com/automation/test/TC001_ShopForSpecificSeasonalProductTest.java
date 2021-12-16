@@ -9,7 +9,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class ShopForSpecificSeasonalProductTest extends BaseClass {
+public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
     HomePage homePage;
     ConfirmationPage confirmationPage;
 
