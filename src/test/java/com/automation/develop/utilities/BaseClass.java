@@ -102,7 +102,7 @@ public class BaseClass implements RulesForBaseClass {
              driver = new EdgeDriver(edgeOptions);
              driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(1));
              js = (JavascriptExecutor)driver;
-             System.out.println("Test will run on Chrome Browser");
+             System.out.println("Test will run on Edge Browser");
           }
     }
     /*-------------------------------------------------------
