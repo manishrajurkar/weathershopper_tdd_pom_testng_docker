@@ -105,6 +105,17 @@ public class BaseClass implements RulesForBaseClass {
              System.out.println("Test will run on Edge Browser");
           }
     }
+    
+     /*-------------------------------------------------------
+    @Comment: Explicit wait.
+    @developer : Manish Rajurkar
+    @Date   : 26.12.2021
+    ------------------------------------------------------- */
+
+    public void initializeExplicitWebDriverWait (){
+        wait = new WebDriverWait(driver,Duration.ofSeconds(3));
+
+    }
     /*-------------------------------------------------------
     @Comment: get the url from address bar
     @developer : Manish Rajurkar
