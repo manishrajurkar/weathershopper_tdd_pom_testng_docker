@@ -1,11 +1,11 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <!--Test suite is created which will execute the test under it parallally -->
-<suite name="WeatherShop" parallel="true">
+<suite name="WeatherShop" parallel="tests">
 <!--Suite level parameters can be defined here -->
-  <parameter name="headless" value="true"/>
+  <parameter name="headless" value="false"/>
     <!-- ******************************************************************************* -->
     <test name="weatherShop-Chrome">
-        <!--Test level parameters can be defined here -->  
+        <!--Test level parameters can be defined here -->
         <parameter name="browser" value="chrome"></parameter>
         <!--Test Class which has test scrip can be defined here -->
         <classes>
@@ -14,11 +14,11 @@
     </test>
 
     <!-- ******************************************************************************* -->
-    <test name="weatherShop-edge">
-        <!--Test level parameters can be defined here -->
-        <parameter name="browser" value="edge"></parameter>
-        <classes>
-            <class name="com.automation.test.TC001_ShopForSpecificSeasonalProductTest"/>
-        </classes>
-    </test>
+<!--    <test name="weatherShop-edge">-->
+<!--        &lt;!&ndash;Test level parameters can be defined here &ndash;&gt;-->
+<!--        <parameter name="browser" value="edge"></parameter>-->
+<!--        <classes>-->
+<!--            <class name="com.automation.test.TC001_ShopForSpecificSeasonalProductTest"/>-->
+<!--        </classes>-->
+<!--    </test>-->
 </suite>

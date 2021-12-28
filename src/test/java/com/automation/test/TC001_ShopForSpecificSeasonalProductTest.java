@@ -1,26 +1,23 @@
 package com.automation.test;
 
-import com.automation.develop.pages.ConfirmationPage;
-import com.automation.develop.pages.HomePage;
-import com.automation.develop.utilities.BaseClass;
+import com.automation.develop.pages.*;
+import com.automation.develop.base.BaseClass;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
     HomePage homePage;
     ConfirmationPage confirmationPage;
+    CartPage cartPage;
 
     @Parameters({"browser"})
     @BeforeTest
     public void setup(String browser) {
         initializePropertiesFile();
         initializeBrowserUsingDriverManager(browser, false);
+        initializeExplicitWebDriverWait();
         homePage = new HomePage();
         confirmationPage = new ConfirmationPage();
-
     }
 
     @Test(priority = 0)
@@ -30,6 +27,7 @@ public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
         System.out.println(getURL());
         //System.out.println(CartPage.getTheTotalCartValue());
         Assert.assertEquals(confirmationPage.paymentIsSuccess(),"PAYMENT SUCCESS");
+        System.out.println(getURL());
 
         // Assert user is on Moisturiser page or Sunscreen page
         // verify initially cart is empty

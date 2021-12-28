@@ -1,11 +1,13 @@
 package com.automation.develop.pages;
 
-import com.automation.develop.utilities.BaseClass;
+import com.automation.develop.base.BaseClass;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +46,7 @@ public class CartPage extends BaseClass {
     private WebElement stripeHeader;
 
     //@FindBy(css = "input[id='email']")
-    @FindBy(xpath = "//*[@id='email']")
+    @FindBy(xpath = "//input[@id='email']")
     @CacheLookup
     private WebElement email;
 
@@ -127,8 +129,8 @@ public class CartPage extends BaseClass {
     public BaseClass enterPaymentDetails() throws InterruptedException {
         payWithCardLink.click();
         driver.switchTo().frame(0);
+        email.click();
         email.sendKeys(confProp.getProperty("email"),Keys.TAB);
-
         cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
         cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
         cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
@@ -142,8 +144,9 @@ public class CartPage extends BaseClass {
         System.out.println("Zip Code entered");
         payLink.click();
         System.out.println("Clicked on pay button");
-        Thread.sleep(7000);
+       // Thread.sleep(4000);
         return new ConfirmationPage();
+
 
     }
 

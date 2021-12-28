@@ -1,6 +1,6 @@
 package com.automation.develop.pages;
 
-import com.automation.develop.utilities.BaseClass;
+import com.automation.develop.base.BaseClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
@@ -19,23 +19,33 @@ public class ConfirmationPage extends BaseClass {
      * Date 16/12/2021
      * ----------------------------------------------------------------------------------------------------------------
      */
-
-// Page Web elements locators (Object Repository)
+    boolean status;
 
     @FindBy(xpath = "//h2[text()='PAYMENT SUCCESS']")
     @CacheLookup
     private static WebElement successHeader;
 
-    //
+    @FindBy(xpath = "//p[@class='text-justify']")
+    @CacheLookup
+    private static WebElement successMessage;
+
+
     public ConfirmationPage() {
         PageFactory.initElements(driver, this);
         System.out.println("Inside Confirmation page");
     }
 
-    //
+    public static String paymentIsSuccess() throws InterruptedException {
+        //Thread.sleep(3000);
 
-    public String paymentIsSuccess() {
-       return successHeader.getText();
+        try {wait.until(ExpectedConditions.visibilityOf(successHeader));
+
+        }catch (Exception e){
+          e.printStackTrace();
+        }
+
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//h2[text()='PAYMENT SUCCESS']")));
+        return successHeader.getText();
 
     }
 }

@@ -1,11 +1,12 @@
 package com.automation.develop.pages;
 
-import com.automation.develop.utilities.BaseClass;
+import com.automation.develop.base.BaseClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,16 +51,19 @@ public class MoisturizersPage extends BaseClass {
     @CacheLookup
     private WebElement cartWitTwoItem;
 
-    public void MoisturizerPage() {
+    public MoisturizersPage() {
         PageFactory.initElements(driver, this);
+        System.out.println("Moist Page initiated");
 
     }
 
     public BaseClass addProducts() throws InterruptedException {
         findTheLeastExpensiveProductAndAddToCart("Aloe");
         findTheLeastExpensiveProductAndAddToCart("Almond");
-        Thread.sleep(1000);
-        driver.findElement(By.xpath("//span[@id ='cart']")).click();
+        wait.until(ExpectedConditions.visibilityOf(cartButton));
+       //wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//span[@id ='cart']")));
+
+        cartButton.click();
         System.out.println("CART BUTTON CLICKED");
         return new CartPage().enterPaymentDetails();
 
@@ -86,10 +90,6 @@ public class MoisturizersPage extends BaseClass {
         newIntListPrice.clear();
     }
 
-    public CartPage clickOnCartButton() {
-        cartButton.click();
-        return new CartPage();
-    }
 
     public boolean verifyCartIsEmpty() {
         return cartEmpty.isDisplayed();
