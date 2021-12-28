@@ -1,11 +1,12 @@
 package com.automation.develop.pages;
 
-import com.automation.develop.utilities.BaseClass;
+import com.automation.develop.base.BaseClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,19 +36,29 @@ public class SunscreensPage extends BaseClass {
     @CacheLookup
     private WebElement cartButton;
 
-    public void SunscreensPage() {
+    public SunscreensPage() {
         PageFactory.initElements(driver, this);
+        System.out.println("Sun Page initiated");
 
     }
 
     public BaseClass addProducts() throws InterruptedException {
         findTheLeastExpensiveProductAndAddToCart("SPF-50");
         findTheLeastExpensiveProductAndAddToCart("SPF-30");
-        Thread.sleep(1000);
-        driver.findElement(By.xpath("//span[@id ='cart']")).click();
+        //Thread.sleep(1000);
+
+        //Not worked
+         //wait.until(ExpectedConditions.visibilityOf(cartButton));
+        //wait.until(ExpectedConditions.presenceOfElementLocated((By)cartButton));
+
+        //Try
+        wait.until(ExpectedConditions.visibilityOf(cartButton));
+
+
+        //Worked
+        //wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//span[@id ='cart']")));
+        cartButton.click();
         System.out.println("CART BUTTON CLICKED");
-        // clickOnCartButton();
-        //cart_button.click();
         //js.executeScript("document.getElementById('cart').click;");
         return new CartPage().enterPaymentDetails();
     }
@@ -72,11 +83,5 @@ public class SunscreensPage extends BaseClass {
         newListPrice.clear();
         newIntListPrice.clear();
     }
-
-    public CartPage clickOnCartButton() {
-        cartButton.click();
-        return new CartPage();
-    }
-
 
 }

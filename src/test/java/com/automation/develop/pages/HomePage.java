@@ -1,6 +1,6 @@
 package com.automation.develop.pages;
 
-import com.automation.develop.utilities.BaseClass;
+import com.automation.develop.base.BaseClass;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 
 public class HomePage extends BaseClass {
     String season = "No season";
+    String temperature_string;
 
     /**
      * -----------------------------------------------------------------------------------------------------------
@@ -44,31 +45,60 @@ public class HomePage extends BaseClass {
     @Author : Manish Rajurkar
     @Date   : 15.12.2021
     ------------------------------------------------------- */
-    public BaseClass navigateToSeasonalProductCatalog() throws InterruptedException {
+//    public BaseClass navigateToSeasonalProductCatalog() throws InterruptedException {
+//
+//        String temperature_string = current_temperature.getText();
+//        String[] temperature_array = temperature_string.split(" ");
+//        int temperature_value = Integer.parseInt(temperature_array[0]);
+//
+//        if (temperature_value < 19) {
+//            season = "WINTER";
+//            System.out.println("It's " + season + " Season here & Today's Temperature is " + temperature_string + " Opening page to Buy Moisturiser");
+//            buy_moisturiserButton.click();
+//            //driver.findElement(By.xpath("//button[text()='Buy moisturizers']")).click();
+//            return new MoisturizersPage().addProducts();
+//
+//        } else if (temperature_value > 34) {
+//            season = "SUMMER";
+//            System.out.println("It's " + season + " Season here & Today's Temperature is " + temperature_string + " Opening page  to Buy Sunscreens");
+//            buy_sunscreensButton.click();
+//            //driver.findElement(By.xpath("//button[text()='Buy sunscreens']")).click();
+//            return new SunscreensPage().addProducts();
+//        } else {
+//
+//            return null;
+//        }
+//    }
+    public void navigateToSeasonalProductCatalog() throws InterruptedException {
 
-        String temperature_string = current_temperature.getText();
-        String[] temperature_array = temperature_string.split(" ");
-        int temperature_value = Integer.parseInt(temperature_array[0]);
+    temperature_string = current_temperature.getText();
+    String[] temperature_array = temperature_string.split(" ");
+    int temperature_value = Integer.parseInt(temperature_array[0]);
 
-        if (temperature_value < 19) {
-            season = "WINTER";
-            System.out.println("It's " + season + " Season here & Today's Temperature is " + temperature_string + " Opening page to Buy Moisturiser");
-            buy_moisturiserButton.click();
-            //driver.findElement(By.xpath("//button[text()='Buy moisturizers']")).click();
-            return new MoisturizersPage().addProducts();
+    if (temperature_value < 19) {
+        season = "WINTER";
+        navigateToMoisturiserPage();
+    } else if (temperature_value > 34) {
+        season = "SUMMER";
+        navigateToSunscreenPage();
+    } else {
+        System.out.println("Something is wrong");
+    }
+}
 
-        } else if (temperature_value > 34) {
-            season = "SUMMER";
-            System.out.println("It's " + season + " Season here & Today's Temperature is " + temperature_string + " Opening page  to Buy Sunscreens");
-            buy_sunscreensButton.click();
-            //driver.findElement(By.xpath("//button[text()='Buy sunscreens']")).click();
-            return new SunscreensPage().addProducts();
-        } else {
+    public BaseClass navigateToMoisturiserPage() throws InterruptedException {
 
-            return null;
-        }
+        System.out.println("It's " + season + " Season here & Today's Temperature is " + temperature_string + " Opening page to Buy Moisturiser");
+        buy_moisturiserButton.click();
+        return new MoisturizersPage().addProducts();
     }
 
+    public BaseClass navigateToSunscreenPage() throws InterruptedException {
+
+        System.out.println("It's " + season + " Season here & Today's Temperature is " + temperature_string + " Opening page  to Buy Sunscreens");
+        buy_sunscreensButton.click();
+        return new SunscreensPage().addProducts();
+    }
     /*-------------------------------------------------------
     @Comment: Open Given http url
     @developer : Manish Rajurkar
@@ -78,7 +108,7 @@ public class HomePage extends BaseClass {
         try {
             if (url != null) {
                 System.out.println("Opening application URL  " + url);
-                driver.get(url);
+                driver. get(url);
             } else {
                 System.out.println("Entered URL is null");
             }
