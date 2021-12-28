@@ -5,22 +5,34 @@ This is a UI test automation framework developed based on the Page Object Model 
 
 ## Getting Started
 
-### Prerequisites
+## Prerequisites
 1. Java 8
 2. Maven
 3. Git
 
-### How to run Test
+## How to Install and Run the Project
+
 All you need to do is to run the below command to build the project using Maven
-```
-# Copy GitHub https URL
-1.git clone https://github.com/manishrajurkar87/weathershopper.git
 
-# Navigate to the location where pom.xml file is present
-2.cd weathershopper/  
-
-# Run maven command
-3.mvn clean install
+#### 1. Copy GitHub https URL
+```bash
+git clone https://github.com/manishrajurkar87/weathershopper.git
 ```
+#### 2. Navigate to the location where pom.xml file is present
+```bash
+cd weathershopper/  
+```
+#### 3. Run maven command
+```bash
+mvn clean install
+```
+
+## How to Use the Project
+
+Page Object Model (POM) is a design pattern, that creates Object Repository for web UI elements. The advantage of the model is that it reduces code duplication and improves test maintenance.
+
+Under this model, for each web page in the application, there should be a corresponding Page Class. This Page class will identify the WebElements of that web page and also contains Page methods which perform operations on those WebElements
+
+
 
 
