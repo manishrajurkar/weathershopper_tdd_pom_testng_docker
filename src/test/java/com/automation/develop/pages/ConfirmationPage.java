@@ -6,7 +6,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import java.time.Duration;
 
 
 public class ConfirmationPage extends BaseClass {
@@ -35,16 +38,21 @@ public class ConfirmationPage extends BaseClass {
         System.out.println("Inside Confirmation page");
     }
 
-    public static String paymentIsSuccess() throws InterruptedException {
-        //Thread.sleep(3000);
+    public String paymentIsSuccess() throws InterruptedException {
 
-        try {wait.until(ExpectedConditions.visibilityOf(successHeader));
+        System.out.println("Invoking Payment Success verification");
+        Thread.sleep(7000);
+        //wait.withTimeout(Duration.ofSeconds(10));
+
+        try {
+            wait.until(ExpectedConditions.visibilityOf(successHeader));
 
         }catch (Exception e){
           e.printStackTrace();
         }
+       // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[text()='PAYMENT SUCCESS']")));
+       // wait.until(ExpectedConditions.titleIs());
 
-        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//h2[text()='PAYMENT SUCCESS']")));
         return successHeader.getText();
 
     }
