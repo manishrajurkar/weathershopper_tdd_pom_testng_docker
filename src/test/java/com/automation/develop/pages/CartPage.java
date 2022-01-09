@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,7 +130,7 @@ public class CartPage extends BaseClass {
     public BaseClass enterPaymentDetails() throws InterruptedException {
         payWithCardLink.click();
         driver.switchTo().frame(0);
-        email.click();
+        //email.click();
         email.sendKeys(confProp.getProperty("email"),Keys.TAB);
         cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
         cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
@@ -144,8 +145,7 @@ public class CartPage extends BaseClass {
         System.out.println("Zip Code entered");
         payLink.click();
         System.out.println("Clicked on pay button");
-       // Thread.sleep(4000);
-        return new ConfirmationPage();
+            return new ConfirmationPage();
 
 
     }

@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <!--Test suite is created which will execute the test under it parallally -->
-<suite name="WeatherShop" parallel="tests">
+<suite name="WeatherShop" parallel="tests" thread-count="3">
 <!--Suite level parameters can be defined here -->
   <parameter name="headless" value="false"/>
     <!-- ******************************************************************************* -->
