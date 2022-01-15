@@ -1,15 +1,12 @@
 package com.automation.develop.pages;
 
 import com.automation.develop.base.BaseClass;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +18,7 @@ public class CartPage extends BaseClass {
      * This Page class will identify the WebElements of the web page and also contains Page methods which perform operations on those WebElements.
      * control is passed to next page based on the action.
      * Maintainable solution for changing locators xpath
-     *
+     * <p>
      * author Manish Rajurkar
      * Date 15/12/2021
      * ----------------------------------------------------------------------------------------------------------------
@@ -83,7 +80,7 @@ public class CartPage extends BaseClass {
     //  constructor which Initializing the page using Page Factory
     public CartPage() {
         PageFactory.initElements(driver, this);
-        System.out.println("In the Cart Page");
+
     }
 
     //Action methods
@@ -123,29 +120,27 @@ public class CartPage extends BaseClass {
         List<String> splitValues = new ArrayList<>();
         splitValues.add(listOfValues[listOfValues.length - 1]); //"344" [3-1 =2]
         int cartValue = Integer.parseInt(splitValues.get(0)); //it has only single value at index 0
-        System.out.println("Your Total Shopping cart values is " + cartValue);
+        //System.out.println("Your Total Shopping cart values is " + cartValue);
         return cartValue;
     }
 
     public BaseClass enterPaymentDetails() throws InterruptedException {
         payWithCardLink.click();
         driver.switchTo().frame(0);
-        //email.click();
-        email.sendKeys(confProp.getProperty("email"),Keys.TAB);
+        logger.info("Navigated to Stripe payment frame");
+        email.sendKeys(confProp.getProperty("email"), Keys.TAB);
         cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
         cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
         cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
         cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
         cardExpiry.sendKeys(confProp.getProperty("card_expiry1"));
         cardExpiry.sendKeys(confProp.getProperty("card_expiry2"));
-        System.out.println("Expiry entered");
         cardCVC.sendKeys(confProp.getProperty("card_cvc"));
-        System.out.println("cvv entered");
         zipCode.sendKeys(confProp.getProperty("zip_code"));
-        System.out.println("Zip Code entered");
         payLink.click();
-        System.out.println("Clicked on pay button");
-            return new ConfirmationPage();
+        logger.info("Payment Details entered");
+
+        return new ConfirmationPage();
 
 
     }

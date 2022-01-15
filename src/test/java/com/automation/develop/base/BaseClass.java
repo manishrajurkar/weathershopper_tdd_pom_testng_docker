@@ -1,6 +1,8 @@
 package com.automation.develop.base;
 
 import com.automation.develop.utilities.GenericConfigs;
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,12 +15,19 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.time.Duration;
 import java.util.Properties;
 
+import static org.openqa.selenium.Platform.*;
 
 
 /**
@@ -35,7 +44,9 @@ public class BaseClass implements RulesForBaseClass {
     public static FileInputStream fis;
     public static WebDriverWait wait;
     public static JavascriptExecutor js;
-    public static Logger logger ;
+    public static Logger logger;//= LogManager.getLogger(checkLog4j.class.getName());
+    public static ExtentReports extentReports;
+
     /*-------------------------------------------------------
     @Comment: Initialize Property File
     @Author : Manish Rajurkar
@@ -43,19 +54,40 @@ public class BaseClass implements RulesForBaseClass {
 ------------------------------------------------------- */
     @Override
     public void initializePropertiesFile() {
-        if (driver == null) {
+        //if (driver == null) {
             try {
                 fis = new FileInputStream(System.getProperty("user.dir") + "\\src\\test\\resources\\Properties\\configuration.properties");
                 confProp = new Properties();
                 confProp.load(fis);
-                System.out.println("Property file loaded successfully");
+                logger.info("Property file loaded successfully");
             } catch (Exception e) {
-                System.out.println("Could Not find the file at the location:");
+                logger.error("Could Not find the file at the location:");
                 e.printStackTrace();
             }
-        } else {
-            System.out.println("Property File Already in use");
+//        } else {
+//            logger.info("Property File Already in use");
+//        }
+    }
+
+
+    public void initializeRemoteWebDriver(String browser, boolean headless ) throws MalformedURLException {
+        if (browser.equalsIgnoreCase("chrome")) {
+            ChromeOptions options = new ChromeOptions();
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+
+            options.addArguments("start-maximized");
+
+            capabilities.setPlatform(ANY);
+            capabilities.setBrowserName("chrome");
+            capabilities.setVersion("94");
+            capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+            options.merge(capabilities);
+
+            URL url = new URL("http://172.28.223.1:4444");
+            driver = new RemoteWebDriver(url, capabilities);
+            System.out.println("Remote Driver ready");
         }
+
     }
 
     /*-------------------------------------------------------
@@ -69,8 +101,8 @@ public class BaseClass implements RulesForBaseClass {
         if (browser.equalsIgnoreCase("chrome")) {
             ChromeOptions chromeOptions = new ChromeOptions();
             if (headless) chromeOptions.addArguments("--headless");
-                             chromeOptions.addArguments("start-maximized");
-                             chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+            chromeOptions.addArguments("start-maximized");
+            chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver(chromeOptions);
             logger.info("Chrome Driver initiated");
@@ -78,8 +110,8 @@ public class BaseClass implements RulesForBaseClass {
         } else if (browser.equalsIgnoreCase("firefox")) {
             FirefoxOptions firefoxOptions = new FirefoxOptions();
             if (headless) firefoxOptions.addArguments("--headless");
-                             firefoxOptions.addArguments("start-maximized");
-                             firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+            firefoxOptions.addArguments("start-maximized");
+            firefoxOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
             WebDriverManager.firefoxdriver().setup();
             driver = new FirefoxDriver(firefoxOptions);
             logger.info("Firefox Driver initiated");
@@ -87,22 +119,16 @@ public class BaseClass implements RulesForBaseClass {
         } else if (browser.equalsIgnoreCase("edge")) {
             EdgeOptions edgeOptions = new EdgeOptions();
             if (headless) edgeOptions.addArguments("--headless");
-                             edgeOptions.addArguments("start-maximized");
-                             edgeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+            edgeOptions.addArguments("start-maximized");
+            edgeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
             WebDriverManager.edgedriver().setup();
             driver = new EdgeDriver(edgeOptions);
             logger.info("Edge Driver initiated");
 
         }
 
-
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(GenericConfigs.IMPLICIT_WAIT));
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(GenericConfigs.PAGE_LOAD_TIMEOUT));
-//        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3000));
-//        driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(3000));
-//
-//     driver.manage().timeouts().implicitlyWait(GenericConfigs.IMPLICIT_WAIT, TimeUnit.SECONDS);
-//     driver.manage().timeouts().pageLoadTimeout(GenericConfigs.PAGE_LOAD_TIMEOUT,TimeUnit.SECONDS);
         js = (JavascriptExecutor) driver;
     }
 
@@ -113,7 +139,8 @@ public class BaseClass implements RulesForBaseClass {
     ------------------------------------------------------- */
     public void initializeExplicitWebDriverWait() {
         wait = new WebDriverWait(driver, Duration.ofSeconds(GenericConfigs.WEBDRIVER_WAIT));
-        //wait = new WebDriverWait(driver, GenericConfigs.WEBDRIVER_WAIT);
+        logger.info("Explicit Wait initialized for " + GenericConfigs.WEBDRIVER_WAIT + " Seconds");
+        // wait = new WebDriverWait(driver, GenericConfigs.WEBDRIVER_WAIT);
         //wait = new WebDriverWait(driver, 30);
 
     }
@@ -132,18 +159,39 @@ public class BaseClass implements RulesForBaseClass {
 
 
     -------------------------------------------------------------------------- */
-    public void log4j (){
+    public void log4j() {
 
+        logger = LogManager.getLogger(BaseClass.class.getName());
+        logger.info("Logger initiated successfully");
+//         logger.debug("This is a debug message");
+//        logger.info("This is an info message");
+//        logger.warn("This is a warn message");
+//        logger.error("This is an error message");
+//        logger.fatal("This is a fatal message");
+    }
 
-        logger = LogManager.getLogger(BaseClass.class.getName()) ;
-        System.setProperty("log4j.configurationFile", "./resources/properties/log4j2.properties");
+    public void extentReport() throws IOException {
+        extentReports = new ExtentReports();
+        ExtentSparkReporter extentSparkReporter = new ExtentSparkReporter("./target/Reports/weathershopperSpark.html");
 
-       // logger = LogManager.getLogger(this);  //(BaseClass.class)
-        logger.debug("This is a debug message");
-        logger.info("This is an info message");
-        logger.warn("This is a warn message");
-        logger.error("This is an error message");
-        logger.fatal("This is a fatal message");
+        // WAY 1 - XMLLOAD
+        extentSparkReporter.loadXMLConfig(new File("src/test/resources/spark-config.xml"));
+        extentReports.attachReporter(extentSparkReporter);
+
+//        //WAY 2  - Json Load
+//        //WAY 3 - Manual Code
+//        extentSparkReporter.config(
+//                ExtentSparkReporterConfig.builder()
+//                        .theme(Theme.DARK)
+//                        .documentTitle("Extent Report")
+//                        .build());
+//
+//
+//        // WAY 4  Manual traditional code.
+//          extentSparkReporter.config().setReportName("WebAutomation Report");
+//          extentSparkReporter.config().setDocumentTitle("Extent report");
+//          extentSparkReporter.config().setTheme(Theme.DARK);
+
     }
 
 }

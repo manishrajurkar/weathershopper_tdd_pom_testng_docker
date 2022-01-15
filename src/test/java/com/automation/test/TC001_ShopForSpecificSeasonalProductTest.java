@@ -2,8 +2,13 @@ package com.automation.test;
 
 import com.automation.develop.pages.*;
 import com.automation.develop.base.BaseClass;
+import com.aventstack.extentreports.ExtentTest;
+import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
+
+import java.io.IOException;
+
 
 public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
     HomePage homePage;
@@ -12,10 +17,12 @@ public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
 
     @Parameters({"browser"})
     @BeforeTest
-    public void setup(String browserName) {
+    public void setup(String browserName) throws IOException {
         log4j();
+        extentReport();
         initializePropertiesFile();
         initializeBrowserUsingDriverManager(browserName, false);
+        //initializeRemoteWebDriver(browserName, false);
         initializeExplicitWebDriverWait();
 
         homePage = new HomePage();
@@ -24,14 +31,17 @@ public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
 
     @Test(priority = 0)
     public void shopForSeasonalProducts() throws InterruptedException {
-//        homePage.opeUrl(confProp.getProperty("url"));
-        logger.info("One Step complete");
-//        homePage.navigateToSeasonalProductCatalog();
-//        System.out.println(getURL());
-       logger.info("Second Step complete");
-//        //System.out.println(CartPage.getTheTotalCartValue());
-//        Assert.assertEquals(confirmationPage.paymentIsSuccess(),"PAYMENT SUCCESS");
+        ExtentTest test = extentReports.createTest("Test1").assignAuthor("Manish")
+                .assignCategory("WebAutomation");
+        test.info("Started execution");
+
+
+        homePage.opeUrl(confProp.getProperty("url"));
+        homePage.navigateToSeasonalProductCatalog();
+        Assert.assertEquals(getURL(),"https://weathershopper.pythonanywhere.com/cart");
+        Assert.assertEquals(confirmationPage.paymentIsSuccessorFailed(),"PAYMENT SUCCESS");
         System.out.println(getURL());
+        test.pass("Test pass");
 
         // Assert user is on Moisturiser page or Sunscreen page
         // verify initially cart is empty
@@ -41,9 +51,14 @@ public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
         // Print the Total Cart value.
     }
 
+    @AfterMethod
+    public void testdownfirst() {
+        driver.close();
+    }
     @AfterTest
     public void teardown() {
-        driver.close();
+        driver.quit();
+        extentReports.flush();
         //driver.quit();
     }
 
