@@ -1,18 +1,15 @@
 package com.automation.develop.pages;
 
 import com.automation.develop.base.BaseClass;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import java.time.Duration;
 
 
 public class ConfirmationPage extends BaseClass {
+
     /**
      * -----------------------------------------------------------------------------------------------------------
      * Object Repository for ConfirmationPage elements contains WebElements and Actions methods.
@@ -28,31 +25,36 @@ public class ConfirmationPage extends BaseClass {
     @CacheLookup
     private static WebElement successHeader;
 
+    @FindBy(xpath = "h2['PAYMENT FAILED']")
+    @CacheLookup
+    private static WebElement failureHeader;
+
     @FindBy(xpath = "//p[@class='text-justify']")
     @CacheLookup
     private static WebElement successMessage;
 
+    //
 
     public ConfirmationPage() {
         PageFactory.initElements(driver, this);
-        System.out.println("Inside Confirmation page");
     }
 
-    public String paymentIsSuccess() throws InterruptedException {
+    public String paymentIsSuccessorFailed() throws InterruptedException {
+         Thread.sleep(7000);
+        //wait.until(ExpectedConditions.visibilityOf(successHeader));
 
-        System.out.println("Invoking Payment Success verification");
-        Thread.sleep(7000);
-        //wait.withTimeout(Duration.ofSeconds(10));
+         try {
+            if (successHeader.isDisplayed()){
 
-        try {
-            wait.until(ExpectedConditions.visibilityOf(successHeader));
+                logger.info("Payment is Success");
+            }
+            else if(failureHeader.isDisplayed()){
+                logger.info("Payment is Failed");
 
-        }catch (Exception e){
-          e.printStackTrace();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-       // wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[text()='PAYMENT SUCCESS']")));
-       // wait.until(ExpectedConditions.titleIs());
-
         return successHeader.getText();
 
     }

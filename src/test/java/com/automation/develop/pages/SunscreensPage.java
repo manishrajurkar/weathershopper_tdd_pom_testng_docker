@@ -38,7 +38,7 @@ public class SunscreensPage extends BaseClass {
 
     public SunscreensPage() {
         PageFactory.initElements(driver, this);
-        System.out.println("Sun Page initiated");
+
 
     }
 
@@ -47,37 +47,32 @@ public class SunscreensPage extends BaseClass {
         findTheLeastExpensiveProductAndAddToCart("SPF-30");
         //Thread.sleep(1000);
 
-        //Not worked
-         //wait.until(ExpectedConditions.visibilityOf(cartButton));
-        //wait.until(ExpectedConditions.presenceOfElementLocated((By)cartButton));
-
-        //Try
         wait.until(ExpectedConditions.visibilityOf(cartButton));
-
 
         //Worked
         //wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//span[@id ='cart']")));
         cartButton.click();
-        System.out.println("CART BUTTON CLICKED");
+        logger.info("CART BUTTON CLICKED");
         //js.executeScript("document.getElementById('cart').click;");
         return new CartPage().enterPaymentDetails();
     }
 
     public void findTheLeastExpensiveProductAndAddToCart(String productShortName) {
         List<WebElement> sunscreenPrices = driver.findElements(By.xpath("//p[contains(text(),'" + productShortName + "')]/following-sibling::p"));
-        System.out.println("Found " + sunscreenPrices.size() + " Products");
+        logger.info("Found " + sunscreenPrices.size() + " Products matching name " +productShortName );
+
         //iterate the found products and add it to the arraylist
         for (WebElement sunscreenPrice : sunscreenPrices) {
             String mos = sunscreenPrice.getText();
             arrayOfPrice = mos.split(". ");
             newListPrice.add(arrayOfPrice[arrayOfPrice.length - 1]);
-            System.out.println(newListPrice);
         }
+        logger.info("Price List of all the matching Sunscreen " +newListPrice);
         // List converted to Integer arrayList
         newIntListPrice = newListPrice.stream().map(Integer::parseInt).collect(Collectors.toList());
         //extracted minimum value
         int min = Collections.min(newIntListPrice);
-        System.out.println("Cheapest Product Price Is ----->>>>" + min);
+        logger.info("Cheapest among " +sunscreenPrices.size()+ " Found Sunscreen Is ----->>>>" + min);
         //Prepared dynamic xpath for the product which needs to be added to the cart
         driver.findElement(By.xpath("//p[contains(text(),'" + productShortName + "')]/..//p[contains(text(),'" + min + "')]/following::button[1]")).click();
         newListPrice.clear();
