@@ -1,6 +1,7 @@
 package com.automation.develop.pages;
 
 import com.automation.develop.base.BaseClass;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
@@ -9,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 public class HomePage extends BaseClass {
     String season = "No season";
     String temperature_string;
+    public WebDriver ldriver;
 
     /**
      * -----------------------------------------------------------------------------------------------------------
@@ -19,6 +21,13 @@ public class HomePage extends BaseClass {
      * Date 14/12/2021
      * ----------------------------------------------------------------------------------------------------------------
      */
+
+    // constructor will initialize the page using PageFactory
+    public HomePage(WebDriver driver) {
+        this.ldriver=driver;
+        PageFactory.initElements(driver, this);
+    }
+
 
 // Page Web elements locators (Object Repository)
 
@@ -34,10 +43,7 @@ public class HomePage extends BaseClass {
     @CacheLookup
     private WebElement buy_sunscreensButton;
 
-    // constructor will initialize the page using PageFactory
-    public HomePage() {
-        PageFactory.initElements(driver, this);
-    }
+
 
     public void navigateToSeasonalProductCatalog() throws InterruptedException {
         temperature_string = current_temperature.getText();
@@ -59,14 +65,14 @@ public class HomePage extends BaseClass {
 
         logger.info("It's " + season + " Season here & Today's Temperature is " + temperature_string + " Opening page to Buy Moisturiser");
         buy_moisturiserButton.click();
-        return new MoisturizersPage().addProducts();
+        return new MoisturizersPage(ldriver).addProducts();
     }
 
     public BaseClass navigateToSunscreenPage() throws InterruptedException {
 
         logger.info("It's " + season + " Season here & Today's Temperature is " + temperature_string + " Opening page  to Buy Sunscreens");
         buy_sunscreensButton.click();
-        return new SunscreensPage().addProducts();
+        return new SunscreensPage(ldriver).addProducts();
     }
 
     /*-------------------------------------------------------
@@ -78,7 +84,7 @@ public class HomePage extends BaseClass {
         try {
             if (url != null) {
                 logger.info("Opening application URL  " + url);
-                driver.get(url);
+                ldriver.get(url);
             } else {
                 logger.error("Entered URL is null");
             }

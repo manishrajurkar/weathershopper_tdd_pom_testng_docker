@@ -15,18 +15,16 @@ public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
     ConfirmationPage confirmationPage;
     CartPage cartPage;
 
+
     @Parameters({"browser"})
     @BeforeTest
-    public void setup(String browserName) throws IOException {
-        log4j();
-        extentReport();
-        initializePropertiesFile();
-        initializeBrowserUsingDriverManager(browserName, false);
-        //initializeRemoteWebDriver(browserName, false);
+    public void setup(String browser) throws Exception {
+        //initializeBrowserUsingDriverManager(browser, false);
+        initializeRemoteWebDriver(browser, false);
         initializeExplicitWebDriverWait();
 
-        homePage = new HomePage();
-        confirmationPage = new ConfirmationPage();
+        homePage = new HomePage(driver);
+        confirmationPage = new ConfirmationPage(driver);
     }
 
     @Test(priority = 0)
@@ -51,15 +49,11 @@ public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
         // Print the Total Cart value.
     }
 
-    @AfterMethod
-    public void testdownfirst() {
-        driver.close();
-    }
+
     @AfterTest
     public void teardown() {
+        driver.close();
         driver.quit();
-        extentReports.flush();
-        //driver.quit();
     }
 
 

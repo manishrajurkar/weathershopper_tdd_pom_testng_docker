@@ -2,6 +2,7 @@ package com.automation.develop.pages;
 
 import com.automation.develop.base.BaseClass;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
@@ -24,6 +25,14 @@ public class SunscreensPage extends BaseClass {
      * Date 14/12/2021
      * ----------------------------------------------------------------------------------------------------------------
      */
+    WebDriver ldriver;
+
+    public SunscreensPage(WebDriver driver) {
+        ldriver=driver;
+        PageFactory.initElements(driver, this);
+
+
+    }
 
 // Page Web elements locators (Object Repository)
 
@@ -36,11 +45,7 @@ public class SunscreensPage extends BaseClass {
     @CacheLookup
     private WebElement cartButton;
 
-    public SunscreensPage() {
-        PageFactory.initElements(driver, this);
 
-
-    }
 
     public BaseClass addProducts() throws InterruptedException {
         findTheLeastExpensiveProductAndAddToCart("SPF-50");
@@ -54,11 +59,11 @@ public class SunscreensPage extends BaseClass {
         cartButton.click();
         logger.info("CART BUTTON CLICKED");
         //js.executeScript("document.getElementById('cart').click;");
-        return new CartPage().enterPaymentDetails();
+        return new CartPage(ldriver).enterPaymentDetails();
     }
 
     public void findTheLeastExpensiveProductAndAddToCart(String productShortName) {
-        List<WebElement> sunscreenPrices = driver.findElements(By.xpath("//p[contains(text(),'" + productShortName + "')]/following-sibling::p"));
+        List<WebElement> sunscreenPrices = ldriver.findElements(By.xpath("//p[contains(text(),'" + productShortName + "')]/following-sibling::p"));
         logger.info("Found " + sunscreenPrices.size() + " Products matching name " +productShortName );
 
         //iterate the found products and add it to the arraylist
@@ -74,7 +79,7 @@ public class SunscreensPage extends BaseClass {
         int min = Collections.min(newIntListPrice);
         logger.info("Cheapest among " +sunscreenPrices.size()+ " Found Sunscreen Is ----->>>>" + min);
         //Prepared dynamic xpath for the product which needs to be added to the cart
-        driver.findElement(By.xpath("//p[contains(text(),'" + productShortName + "')]/..//p[contains(text(),'" + min + "')]/following::button[1]")).click();
+        ldriver.findElement(By.xpath("//p[contains(text(),'" + productShortName + "')]/..//p[contains(text(),'" + min + "')]/following::button[1]")).click();
         newListPrice.clear();
         newIntListPrice.clear();
     }
