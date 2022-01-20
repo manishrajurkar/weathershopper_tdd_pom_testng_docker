@@ -1,8 +1,17 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <!--Test suite is created which will execute the test under it parallally -->
+
+<!--        https://www.lambdatest.com/blog/grouping-test-cases-in-testng/-->
 <suite name="WeatherShop" parallel="tests" thread-count="2">
+
+    
 <!--Suite level parameters can be defined here -->
-  <parameter name="headless" value="false"/>
+    <!--  <parameter name="headless" value="false"/>-->
+<!--    <test name="DockerSetup">-->
+<!--        <classes>-->
+<!--            <class name="com.automation.test.seleniumGridInDocker"></class>-->
+<!--        </classes>-->
+<!--    </test>-->
     <!-- ******************************************************************************* -->
     <test name="weatherShop-Chrome">
         <!--Test level parameters can be defined here -->
@@ -14,11 +23,20 @@
     </test>
 
     <!-- ******************************************************************************* -->
-<!--    <test name="weatherShop-edge">-->
+<!--    <test name="weatherShop-firfox">-->
 <!--        &lt;!&ndash;Test level parameters can be defined here &ndash;&gt;-->
-<!--        <parameter name="browser" value="edge"></parameter>-->
+<!--        <parameter name="browser" value="firefox"></parameter>-->
 <!--        <classes>-->
 <!--            <class name="com.automation.test.TC001_ShopForSpecificSeasonalProductTest"/>-->
 <!--        </classes>-->
 <!--    </test>-->
+
+<!--    &lt;!&ndash; ******************************************************************************* &ndash;&gt;-->
+    <test name="weatherShop-msedge">
+        <!--Test level parameters can be defined here -->
+        <parameter name="browser" value="msedge"></parameter>
+        <classes>
+            <class name="com.automation.test.TC001_ShopForSpecificSeasonalProductTest"/>
+        </classes>
+    </test>
 </suite>

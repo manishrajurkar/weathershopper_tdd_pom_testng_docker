@@ -2,11 +2,13 @@ package com.automation.develop.pages;
 
 import com.automation.develop.base.BaseClass;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +16,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MoisturizersPage extends BaseClass {
+    private WebDriver ldriver;
+    private WebDriverWait lwait;
 
     /**
      * -----------------------------------------------------------------------------------------------------------
@@ -24,6 +28,13 @@ public class MoisturizersPage extends BaseClass {
      * Date 14/12/2021
      * ----------------------------------------------------------------------------------------------------------------
      */
+
+    public MoisturizersPage(WebDriver driver, WebDriverWait wait) {
+        ldriver=driver;
+        lwait=wait;
+        PageFactory.initElements(driver, this);
+
+    }
 
 // Page Web elements locators (Object Repository)
 
@@ -51,25 +62,21 @@ public class MoisturizersPage extends BaseClass {
     @CacheLookup
     private WebElement cartWitTwoItem;
 
-    public MoisturizersPage() {
-        PageFactory.initElements(driver, this);
-
-    }
 
     public BaseClass addProducts() throws InterruptedException {
         findTheLeastExpensiveProductAndAddToCart("Aloe");
         findTheLeastExpensiveProductAndAddToCart("Almond");
-        wait.until(ExpectedConditions.visibilityOf(cartButton));
+        lwait.until(ExpectedConditions.visibilityOf(cartButton));
        //wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//span[@id ='cart']")));
 
         cartButton.click();
         logger.info("Navigating to Cart page");
-        return new CartPage().enterPaymentDetails();
+        return new CartPage(ldriver,lwait).enterPaymentDetails();
 
     }
 
     public void findTheLeastExpensiveProductAndAddToCart(String productShortName) {
-        List<WebElement> moisturizerPrices = driver.findElements(By.xpath("//p[contains(text(),'" + productShortName + "')]/following-sibling::p"));
+        List<WebElement> moisturizerPrices = ldriver.findElements(By.xpath("//p[contains(text(),'" + productShortName + "')]/following-sibling::p"));
         logger.info("Found " + moisturizerPrices.size() + " Products matching name " +productShortName );
         //iterate the found products and add it to the arraylist
         for (int i = 0; i < moisturizerPrices.size(); i++) {
@@ -84,7 +91,7 @@ public class MoisturizersPage extends BaseClass {
         int min = Collections.min(newIntListPrice);
         logger.info("Cheapest among " +moisturizerPrices.size()+ " Found Sunscreen Is ----->>>>" + min);
         //Prepared dynamic xpath for the product which needs to be added to the cart
-        driver.findElement(By.xpath("//p[contains(text(),'" + productShortName + "')]/..//p[contains(text(),'" + min + "')]/following::button[1]")).click();
+        ldriver.findElement(By.xpath("//p[contains(text(),'" + productShortName + "')]/..//p[contains(text(),'" + min + "')]/following::button[1]")).click();
         newListPrice.clear();
         newIntListPrice.clear();
     }
