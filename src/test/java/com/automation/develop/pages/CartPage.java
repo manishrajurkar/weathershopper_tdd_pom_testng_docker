@@ -2,15 +2,21 @@ package com.automation.develop.pages;
 
 import com.automation.develop.base.BaseClass;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CartPage extends BaseClass {
+    WebDriver ldriver ;
+    WebDriverWait lwait;
 
     /**
      * -----------------------------------------------------------------------------------------------------------
@@ -23,6 +29,15 @@ public class CartPage extends BaseClass {
      * Date 15/12/2021
      * ----------------------------------------------------------------------------------------------------------------
      */
+
+    //  constructor which Initializing the page using Page Factory
+    public CartPage(WebDriver driver,WebDriverWait wait) {
+
+        ldriver=driver;
+        lwait=wait;
+        PageFactory.initElements(driver, this);
+
+    }
 
 // Page Web elements locators (Object Repository)
 
@@ -77,11 +92,7 @@ public class CartPage extends BaseClass {
     @CacheLookup
     private List<WebElement> tableRow;
 
-    //  constructor which Initializing the page using Page Factory
-    public CartPage() {
-        PageFactory.initElements(driver, this);
 
-    }
 
     //Action methods
 
@@ -125,24 +136,32 @@ public class CartPage extends BaseClass {
     }
 
     public BaseClass enterPaymentDetails() throws InterruptedException {
-        payWithCardLink.click();
-        driver.switchTo().frame(0);
-        logger.info("Navigated to Stripe payment frame");
-        email.sendKeys(confProp.getProperty("email"), Keys.TAB);
-        cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
-        cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
-        cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
-        cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
-        cardExpiry.sendKeys(confProp.getProperty("card_expiry1"));
-        cardExpiry.sendKeys(confProp.getProperty("card_expiry2"));
-        cardCVC.sendKeys(confProp.getProperty("card_cvc"));
-        zipCode.sendKeys(confProp.getProperty("zip_code"));
-        payLink.click();
-        logger.info("Payment Details entered");
 
-        return new ConfirmationPage();
+        try {
+            payWithCardLink.click();
+            ldriver.switchTo().frame(0);
+            logger.info("Navigated to Stripe payment frame");
+            lwait.until(ExpectedConditions.visibilityOfAllElements(email));
+            email.sendKeys(confProp.getProperty("email"), Keys.TAB);
+            cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
+            cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
+            cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
+            cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
+            cardExpiry.sendKeys(confProp.getProperty("card_expiry1"));
+            cardExpiry.sendKeys(confProp.getProperty("card_expiry2"));
+            cardCVC.sendKeys(confProp.getProperty("card_cvc"));
+            zipCode.click();
+            zipCode.sendKeys(confProp.getProperty("zip_code"));
+            payLink.click();
+            logger.info("Payment Details entered");
 
 
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return new ConfirmationPage(ldriver,lwait);
     }
 
 

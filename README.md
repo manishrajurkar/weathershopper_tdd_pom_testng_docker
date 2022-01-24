@@ -33,3 +33,5 @@ Page Object Model (POM) is a design pattern, that creates Object Repository for 
 
 Under this model, for each web page in the application, there should be a corresponding Page Class. This Page class will identify the WebElements of that web page and also contains Page methods which perform operations on those WebElements
 
+
+
