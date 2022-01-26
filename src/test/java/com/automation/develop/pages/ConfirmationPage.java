@@ -1,7 +1,5 @@
 package com.automation.develop.pages;
-
 import com.automation.develop.base.BaseClass;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.CacheLookup;
@@ -9,11 +7,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
-
-import static org.testng.Assert.assertEquals;
-
 
 public class ConfirmationPage extends BaseClass {
     public WebDriver ldriver;
@@ -29,9 +22,9 @@ public class ConfirmationPage extends BaseClass {
      * ----------------------------------------------------------------------------------------------------------------
      */
 
-    public ConfirmationPage(WebDriver driver,WebDriverWait wait) {
-        ldriver =driver;
-        lwait=wait;
+    public ConfirmationPage(WebDriver driver, WebDriverWait wait) {
+        ldriver = driver;
+        lwait = wait;
         PageFactory.initElements(driver, this);
     }
 
@@ -50,38 +43,25 @@ public class ConfirmationPage extends BaseClass {
     @CacheLookup
     private static WebElement successMessage;
 
-    //
 
+    public String paymentIsSuccessorFailed()  {
 
-
-    public String paymentIsSuccessorFailed() throws InterruptedException {
-         //Thread.sleep(7000);
-
-
-
-//        for (int i=0;i<10;i++){
-//            String status = (String) js.executeScript("return document.readyState");
-//            if (status.equals("completed")) {
-                lwait.until(ExpectedConditions.visibilityOfAllElements(successHeader));
-//                break;
-//            }
-//        }
-        // wait.until(driver -> driver.findElement(By.xpath("//h2[text()='PAYMENT SUCCESS']")));
-        //assertEquals(foo.getText(), "PAYMENT SUCCESS");
-
+        lwait.until(ExpectedConditions.visibilityOfAllElements(successHeader));
+        String value = null;
         try {
             if (successHeader.isDisplayed()){
-
                 logger.info("Payment is Success");
+               value = successHeader.getText();
             }
             else if(failureHeader.isDisplayed()){
                 logger.info("Payment is Failed");
+                value = failureHeader.getText();
 
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return successHeader.getText();
-
+        return value;
     }
+
 }

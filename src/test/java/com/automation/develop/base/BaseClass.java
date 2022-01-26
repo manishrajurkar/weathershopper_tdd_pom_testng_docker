@@ -84,6 +84,17 @@ public class BaseClass implements RulesForBaseClass {
     }
 
     /*-------------------------------------------------------
+       Comment: Clean browser.
+       Author : Manish Rajurkar
+       Date   : 26.1.2021
+ ------------------------------------------------------- */
+    public static void cleanBrowserDrivers() throws IOException, InterruptedException {
+        Runtime.getRuntime().exec("cmd /c start cleanBrowserDrivers.bat");
+        Thread.sleep(15000);
+        logger.info("Docker Selenium HUB started");
+    }
+
+    /*-------------------------------------------------------
     @Comment: Initialize Property File
     @Author : Manish Rajurkar
     @Date   : 15.12.2021
@@ -141,7 +152,6 @@ public class BaseClass implements RulesForBaseClass {
             capabilities2.setCapability("browserName", "EDGE");
             capabilities2.setCapability("platform", Platform.ANY);
             capabilities2.merge(edgeOptions);
-            //edgeOptions.merge(capabilities);
             driver = new RemoteWebDriver(new URL(url), capabilities2);
 
         }

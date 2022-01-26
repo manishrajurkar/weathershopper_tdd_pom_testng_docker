@@ -1,0 +1,36 @@
+2022-01-26 14:56:28.519 [main] INFO  com.automation.develop.base.BaseClass - Logger initiated successfully
+2022-01-26 14:56:28.827 [main] INFO  com.automation.develop.base.BaseClass - Property file loaded successfully
+2022-01-26 14:56:43.887 [main] INFO  com.automation.develop.base.BaseClass - Docker Selenium HUB started
+2022-01-26 14:56:43.896 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - From Testng listeners onStart is startedweatherShop-msedge
+2022-01-26 14:56:43.896 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - From Testng listeners onStart is startedweatherShop-Chrome
+2022-01-26 14:56:50.346 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - Explicit Wait initialized for 10 Seconds
+2022-01-26 14:56:50.346 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - Explicit Wait initialized for 10 Seconds
+2022-01-26 14:56:50.455 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - From TestNG Listener Test has startedshopForSeasonalProducts
+2022-01-26 14:56:50.456 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - From TestNG Listener Test has startedshopForSeasonalProducts
+2022-01-26 14:56:50.499 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - Opening application URL  https://weathershopper.pythonanywhere.com
+2022-01-26 14:56:50.499 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - Opening application URL  https://weathershopper.pythonanywhere.com
+2022-01-26 14:56:56.735 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - It's WINTER Season here & Today's Temperature is 16 ℃ Opening page to Buy Moisturiser
+2022-01-26 14:56:56.736 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - It's WINTER Season here & Today's Temperature is 9 ℃ Opening page to Buy Moisturiser
+2022-01-26 14:56:59.647 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - Found 4 Products matching name Aloe
+2022-01-26 14:56:59.820 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - Price List of all the matching Moisturizers [199, 216, 215, 365]
+2022-01-26 14:56:59.821 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - Cheapest among 4 Found Sunscreen Is ----->>>>199
+2022-01-26 14:56:59.967 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - Found 2 Products matching name Almond
+2022-01-26 14:57:00.072 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - Price List of all the matching Moisturizers [360, 220]
+2022-01-26 14:57:00.072 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - Cheapest among 2 Found Sunscreen Is ----->>>>220
+2022-01-26 14:57:00.087 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - Found 2 Products matching name Aloe
+2022-01-26 14:57:00.190 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - Price List of all the matching Moisturizers [299, 216]
+2022-01-26 14:57:00.190 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - Cheapest among 2 Found Sunscreen Is ----->>>>216
+2022-01-26 14:57:00.378 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - Found 3 Products matching name Almond
+2022-01-26 14:57:00.497 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - Price List of all the matching Moisturizers [353, 128, 360]
+2022-01-26 14:57:00.497 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - Cheapest among 3 Found Sunscreen Is ----->>>>128
+2022-01-26 14:57:10.462 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - Navigating to Cart page
+2022-01-26 14:57:10.495 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - Navigating to Cart page
+2022-01-26 14:57:10.606 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - Navigated to Stripe payment frame
+2022-01-26 14:57:10.638 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - Navigated to Stripe payment frame
+2022-01-26 14:57:12.551 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - Payment Details entered
+2022-01-26 14:57:12.713 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - Payment Details entered
+2022-01-26 14:57:18.407 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - Payment is Success
+2022-01-26 14:57:18.696 [TestNG-tests-1] INFO  com.automation.develop.base.BaseClass - From TestNG Listener Test has FinishweatherShop-Chrome
+2022-01-26 14:57:18.818 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - Payment is Success
+2022-01-26 14:57:19.061 [TestNG-tests-2] INFO  com.automation.develop.base.BaseClass - From TestNG Listener Test has FinishweatherShop-msedge
+2022-01-26 14:57:34.653 [main] INFO  com.automation.develop.base.BaseClass - Docker Selenium HUB stopped
