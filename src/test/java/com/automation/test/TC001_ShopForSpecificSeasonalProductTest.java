@@ -32,6 +32,7 @@ public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
         ExtentTest test = extentReports.createTest("E2EFunctional").assignAuthor("Manish")
                 .assignCategory("WebAutomation");
             test.info("Test execution started");
+
         homePage.opeUrl(confProp.getProperty("url"));
             test.info("Application URL open");
         homePage.navigateToSeasonalProductCatalog();

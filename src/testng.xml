@@ -4,6 +4,10 @@
 <suite name="WeatherShop" parallel="tests" thread-count="3">
 <!--Suite level parameters can be defined here -->
 
+    <listeners>
+        <listener class-name="com.automation.develop.utilities.TestngListener"></listener>
+    </listeners>
+
     <!-- ******************************************************************************* -->
     <test name="weatherShop-Chrome">
         <!--Test level parameters can be defined here -->
