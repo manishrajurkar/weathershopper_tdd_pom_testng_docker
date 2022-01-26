@@ -21,6 +21,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import org.testng.asserts.SoftAssert;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -50,13 +51,15 @@ public class BaseClass implements RulesForBaseClass {
     public static DesiredCapabilities capabilities;
     public static DesiredCapabilities capabilities1;
     public static DesiredCapabilities capabilities2;
+    public static SoftAssert softAssert;
     //protected static ThreadLocal<RemoteWebDriver> driver1 = new ThreadLocal<>();
 
     @BeforeSuite
     public void suiteSetup() throws IOException, InterruptedException {
         log4j();
-        extentReport();
         initializePropertiesFile();
+        extentReport();
+        softAssertion();
         startDocker();
     }
 
@@ -65,6 +68,16 @@ public class BaseClass implements RulesForBaseClass {
         extentReports.flush();
         stopDocker();
     }
+
+    /*-------------------------------------------------------
+       Comment: SoftAssertionsTestNG
+       Author : Manish Rajurkar
+       Date   : 26.1.2021
+    ------------------------------------------------------- */
+     public void softAssertion(){
+         softAssert = new SoftAssert();
+
+     }
 
     /*-------------------------------------------------------
     @Comment: Docker start and Stop

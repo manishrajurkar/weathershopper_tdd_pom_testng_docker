@@ -36,8 +36,8 @@ public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
         homePage.opeUrl(confProp.getProperty("url"));
             test.info("Application URL open");
         homePage.navigateToSeasonalProductCatalog();
-        Assert.assertEquals(getURL(),"https://weathershopper.pythonanywhere.com/cart");
-        Assert.assertEquals(confirmationPage.paymentIsSuccessorFailed(),"PAYMENT SUCCESS");
+        softAssert.assertEquals(getURL(),"https://weathershopper.pythonanywhere.com/cart");
+        softAssert.assertEquals(confirmationPage.paymentIsSuccessorFailed(),"PAYMENT SUCCESS");
             test.info("Payment is successful");
         System.out.println(getURL());
             test.info("Test Case Completed");
@@ -46,6 +46,7 @@ public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
 
     @AfterTest
     public void teardown() {
+        softAssert.assertAll();
         driver.close();
         driver.quit();
     }
