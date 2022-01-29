@@ -26,50 +26,35 @@ public class SunscreensPage extends BaseClass {
      * Date 14/12/2021
      * ----------------------------------------------------------------------------------------------------------------
      */
-    WebDriver ldriver;
-    WebDriverWait lwait;
-
+    private final WebDriver ldriver;
+    private final WebDriverWait lwait;
+    List<String> newListPrice = new ArrayList<String>();
+    List<Integer> newIntListPrice = new ArrayList<Integer>();
+    public static String[] arrayOfPrice;
 
     public SunscreensPage(WebDriver driver,WebDriverWait wait) {
         ldriver=driver;
         lwait=wait;
         PageFactory.initElements(driver,this);
-
-
     }
-
-// Page Web elements locators (Object Repository)
-
-    List<String> newListPrice = new ArrayList<String>();
-    List<Integer> newIntListPrice = new ArrayList<Integer>();
-    public static String[] arrayOfPrice;
-
 
     @FindBy(xpath = "//span[@id ='cart']")
     @CacheLookup
     private WebElement cartButton;
 
 
-
     public BaseClass addProducts() throws InterruptedException {
         findTheLeastExpensiveProductAndAddToCart("SPF-50");
         findTheLeastExpensiveProductAndAddToCart("SPF-30");
-        //Thread.sleep(1000);
-
         lwait.until(ExpectedConditions.visibilityOf(cartButton));
-
-        //Worked
-        //wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//span[@id ='cart']")));
         cartButton.click();
         logger.info("CART BUTTON CLICKED");
-        //js.executeScript("document.getElementById('cart').click;");
         return new CartPage(ldriver,lwait).enterPaymentDetails();
     }
 
     public void findTheLeastExpensiveProductAndAddToCart(String productShortName) {
         List<WebElement> sunscreenPrices = ldriver.findElements(By.xpath("//p[contains(text(),'" + productShortName + "')]/following-sibling::p"));
         logger.info("Found " + sunscreenPrices.size() + " Products matching name " +productShortName );
-
         //iterate the found products and add it to the arraylist
         for (WebElement sunscreenPrice : sunscreenPrices) {
             String mos = sunscreenPrice.getText();

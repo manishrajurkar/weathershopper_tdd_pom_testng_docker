@@ -45,23 +45,35 @@ public class ConfirmationPage extends BaseClass {
 
 
     public String paymentIsSuccessorFailed()  {
+        String textFromMessage = null;
 
-        lwait.until(ExpectedConditions.visibilityOfAllElements(successHeader));
-        String value = null;
+        try{
+            lwait.until(ExpectedConditions.visibilityOfAllElements(successHeader));
+        } catch (Exception e){
+            logger.error("Success Header not found" +e);
+        }
+
+        try{
+            lwait.until(ExpectedConditions.visibilityOfAllElements(failureHeader));
+        } catch (Exception e){
+            logger.error("Failure Header not found" +e);
+        }
+
         try {
+
             if (successHeader.isDisplayed()){
                 logger.info("Payment is Success");
-               value = successHeader.getText();
+                textFromMessage = successHeader.getText();
             }
             else if(failureHeader.isDisplayed()){
                 logger.info("Payment is Failed");
-                value = failureHeader.getText();
+                textFromMessage = failureHeader.getText();
 
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return value;
+        return textFromMessage;
     }
 
 }

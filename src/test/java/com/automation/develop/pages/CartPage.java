@@ -51,7 +51,6 @@ public class CartPage extends BaseClass {
 
     @FindBy(css = "p[id='total']")
     @CacheLookup
-
     private static WebElement totalAmount;
 
     @FindBy(xpath = "//h1[text()='Stripe.com']")
@@ -126,36 +125,26 @@ public class CartPage extends BaseClass {
 
     public static int getTheTotalCartValue() {
         //https://stackoverflow.com/questions/18838781/converting-string-array-to-an-integer-array
-        String amount = totalAmount.getText();  // Total: Rupees 344
-        String[] listOfValues = amount.split(" "); // "Total","Rupees" ,"344"  [0,1,2]
+        String[] listOfValues = totalAmount.getText().split(" "); // "Total: Rupees 344" &&// "Total","Rupees" ,"344"  [0,1,2]
         List<String> splitValues = new ArrayList<>();
         splitValues.add(listOfValues[listOfValues.length - 1]); //"344" [3-1 =2]
         int cartValue = Integer.parseInt(splitValues.get(0)); //it has only single value at index 0
-        //System.out.println("Your Total Shopping cart values is " + cartValue);
+        logger.info("Your Total Shopping cart values is " + cartValue);
         return cartValue;
     }
-
     public BaseClass enterPaymentDetails() throws InterruptedException {
 
         try {
             payWithCardLink.click();
-            ldriver.switchTo().frame(0);
-            logger.info("Navigated to Stripe payment frame");
+            genericMethods.switchTOFrame(ldriver,0);
             lwait.until(ExpectedConditions.visibilityOfAllElements(email));
-            email.sendKeys(confProp.getProperty("email"), Keys.TAB);
-            cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
-            cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
-            cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
-            cardNumber.sendKeys(Keys.NUMPAD4, Keys.NUMPAD2, Keys.NUMPAD4, Keys.NUMPAD2);
-            cardExpiry.sendKeys(confProp.getProperty("card_expiry1"));
-            cardExpiry.sendKeys(confProp.getProperty("card_expiry2"));
-            cardCVC.sendKeys(confProp.getProperty("card_cvc"));
-            zipCode.click();
-            zipCode.sendKeys(confProp.getProperty("zip_code"));
+            genericMethods.enterCardNumbers(confProp.getProperty("email"),email);
+            genericMethods.enterCardNumbers(confProp.getProperty("card_number"), cardNumber);
+            genericMethods.enterCardNumbers(confProp.getProperty("card_expiry"), cardExpiry);
+            genericMethods.enterCardNumbers(confProp.getProperty("card_cvc"), cardCVC);
+            genericMethods.enterCardNumbers(confProp.getProperty("zip_code"), zipCode);
             payLink.click();
-            logger.info("Payment Details entered");
-
-
+            logger.info("Payment Details entered and clicked on pay button");
         }
         catch (Exception e) {
             e.printStackTrace();

@@ -6,6 +6,7 @@ import com.aventstack.extentreports.ExtentTest;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+
 /**
  *
  */
@@ -13,6 +14,7 @@ import org.testng.annotations.*;
 public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
     HomePage homePage;
     ConfirmationPage confirmationPage;
+    CartPage cartPage;
 
 
     @Parameters({"browser"})
@@ -24,6 +26,7 @@ public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
 
         homePage = new HomePage(driver,wait);
         confirmationPage = new ConfirmationPage(driver,wait);
+        cartPage = new CartPage(driver,wait);
 
     }
 
@@ -31,16 +34,15 @@ public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
     public void shopForSeasonalProducts() throws InterruptedException {
         ExtentTest test = extentReports.createTest("E2EFunctional").assignAuthor("Manish")
                 .assignCategory("WebAutomation");
-            test.info("Test execution started");
-
+        test.info("Test execution started");
         homePage.opeUrl(confProp.getProperty("url"));
-            test.info("Application URL open");
+        test.info("Application URL open");
         homePage.navigateToSeasonalProductCatalog();
         softAssert.assertEquals(getURL(),"https://weathershopper.pythonanywhere.com/cart");
         softAssert.assertEquals(confirmationPage.paymentIsSuccessorFailed(),"PAYMENT SUCCESS");
-            test.info("Payment is successful");
-        System.out.println(getURL());
-            test.info("Test Case Completed");
+        test.info("Payment is successful");
+        softAssert.assertEquals(getURL(),"https://weathershopper.pythonanywhere.com/confirmation");
+        test.info("Test Case Completed");
 
     }
 

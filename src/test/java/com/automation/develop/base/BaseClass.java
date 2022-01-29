@@ -1,6 +1,7 @@
 package com.automation.develop.base;
 
 import com.automation.develop.utilities.GenericConfigs;
+import com.automation.develop.utilities.GenericMethods;
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -52,6 +53,7 @@ public class BaseClass implements RulesForBaseClass {
     public static DesiredCapabilities capabilities1;
     public static DesiredCapabilities capabilities2;
     public static SoftAssert softAssert;
+    public static GenericMethods genericMethods = new GenericMethods();
     //protected static ThreadLocal<RemoteWebDriver> driver1 = new ThreadLocal<>();
 
     @BeforeSuite
