@@ -16,8 +16,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MoisturizersPage extends BaseClass {
-    private WebDriver ldriver;
-    private WebDriverWait lwait;
+    private final WebDriver ldriver;
+    private final WebDriverWait lwait;
 
     /**
      * -----------------------------------------------------------------------------------------------------------
@@ -67,8 +67,6 @@ public class MoisturizersPage extends BaseClass {
         findTheLeastExpensiveProductAndAddToCart("Aloe");
         findTheLeastExpensiveProductAndAddToCart("Almond");
         lwait.until(ExpectedConditions.visibilityOf(cartButton));
-       //wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//span[@id ='cart']")));
-
         cartButton.click();
         logger.info("Navigating to Cart page");
         return new CartPage(ldriver,lwait).enterPaymentDetails();
@@ -80,8 +78,8 @@ public class MoisturizersPage extends BaseClass {
         logger.info("Found " + moisturizerPrices.size() + " Products matching name " +productShortName );
         //iterate the found products and add it to the arraylist
         for (int i = 0; i < moisturizerPrices.size(); i++) {
-            String sun = moisturizerPrices.get(i).getText();
-            arrayOfPrice = sun.split(". ");
+            String moisturizers = moisturizerPrices.get(i).getText();
+            arrayOfPrice = moisturizers.split(". ");
             newListPrice.add(arrayOfPrice[arrayOfPrice.length - 1]);
         }
         logger.info("Price List of all the matching Moisturizers " +newListPrice);
