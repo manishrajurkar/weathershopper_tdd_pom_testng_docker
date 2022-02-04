@@ -1,6 +1,7 @@
 package com.automation.develop.pages;
 
 import com.automation.develop.base.BaseClass;
+import com.automation.develop.utilities.GenericMethods;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -32,10 +33,9 @@ public class CartPage extends BaseClass {
 
     //  constructor which Initializing the page using Page Factory
     public CartPage(WebDriver driver,WebDriverWait wait) {
-
         ldriver=driver;
         lwait=wait;
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(ldriver, this);
 
     }
 
@@ -144,7 +144,9 @@ public class CartPage extends BaseClass {
             genericMethods.enterCardNumbers(confProp.getProperty("card_cvc"), cardCVC);
             genericMethods.enterCardNumbers(confProp.getProperty("zip_code"), zipCode);
             payLink.click();
+            checkJsStatus(ldriver);
             logger.info("Payment Details entered and clicked on pay button");
+
         }
         catch (Exception e) {
             e.printStackTrace();

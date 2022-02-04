@@ -19,6 +19,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -60,17 +61,36 @@ public class BaseClass implements RulesForBaseClass {
     public void suiteSetup() throws IOException, InterruptedException {
         log4j();
         initializePropertiesFile();
-        extentReport();
         softAssertion();
-        startDocker();
+        extentReport();
+
+        //startDocker();
     }
 
     @AfterSuite
     public void suiteTearDown() throws IOException, InterruptedException {
         extentReports.flush();
-        stopDocker();
+
+        //stopDocker();
     }
 
+    public void WaitForTitle(String value, WebDriverWait lwait){
+        this.wait=lwait;
+        wait.until(ExpectedConditions.titleIs(value));
+    }
+
+
+    public void checkJsStatus(WebDriver driver) {
+        js = (JavascriptExecutor) driver;
+        String status;
+
+        do {
+            status = js.executeScript("return document.readyState").toString();
+            //return true;
+        }
+        while (!status.equals("complete"));
+
+    }
     /*-------------------------------------------------------
        Comment: SoftAssertionsTestNG
        Author : Manish Rajurkar
@@ -78,9 +98,7 @@ public class BaseClass implements RulesForBaseClass {
     ------------------------------------------------------- */
      public void softAssertion(){
          softAssert = new SoftAssert();
-
      }
-
     /*-------------------------------------------------------
     @Comment: Docker start and Stop
     @Author : Manish Rajurkar
@@ -235,6 +253,8 @@ public class BaseClass implements RulesForBaseClass {
     @Date   : 15.12.2021
     ------------------------------------------------------- */
     public String getURL() {
+        String url = driver.getCurrentUrl();
+        System.out.println(url);
         return driver.getCurrentUrl();
     }
 

@@ -35,7 +35,7 @@ public class SunscreensPage extends BaseClass {
     public SunscreensPage(WebDriver driver,WebDriverWait wait) {
         ldriver=driver;
         lwait=wait;
-        PageFactory.initElements(driver,this);
+        PageFactory.initElements(ldriver,this);
     }
 
     @FindBy(xpath = "//span[@id ='cart']")
@@ -49,7 +49,7 @@ public class SunscreensPage extends BaseClass {
         lwait.until(ExpectedConditions.visibilityOf(cartButton));
         cartButton.click();
         logger.info("CART BUTTON CLICKED");
-        return new CartPage(ldriver,lwait).enterPaymentDetails();
+        return new CartPage(ldriver,lwait) ;//.enterPaymentDetails();
     }
 
     public void findTheLeastExpensiveProductAndAddToCart(String productShortName) {
