@@ -3,7 +3,7 @@ package com.automation.test;
 import com.automation.develop.pages.*;
 import com.automation.develop.base.BaseClass;
 import com.aventstack.extentreports.ExtentTest;
-import org.testng.Assert;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.*;
 
 
@@ -20,8 +20,8 @@ public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
     @Parameters({"browser"})
     @BeforeTest
     public void setup(String browser) throws Exception {
-        //initializeBrowserUsingDriverManager(browser, false);
-        initializeRemoteWebDriver(browser, false);
+        initializeBrowserUsingDriverManager(browser, false);
+        //initializeRemoteWebDriver(browser, false);
         initializeExplicitWebDriverWait(driver);
 
         homePage = new HomePage(driver,wait);
@@ -39,11 +39,14 @@ public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
         test.info("Application URL open");
         homePage.navigateToSeasonalProductCatalog();
         softAssert.assertEquals(getURL(),"https://weathershopper.pythonanywhere.com/cart");
+        cartPage.enterPaymentDetails();
+        //Thread.sleep(5000);
+        driver.switchTo().parentFrame();
+        //softAssert.assertEquals(confirmationPage.paymentIsSuccessorFailed(),"Checkout");
         softAssert.assertEquals(confirmationPage.paymentIsSuccessorFailed(),"PAYMENT SUCCESS");
-        test.info("Payment is successful");
         softAssert.assertEquals(getURL(),"https://weathershopper.pythonanywhere.com/confirmation");
-        test.info("Test Case Completed");
-
+         test.info("Payment is successful");
+         test.info("Test Case Completed");
     }
 
     @AfterTest
@@ -51,6 +54,7 @@ public class TC001_ShopForSpecificSeasonalProductTest extends BaseClass {
         softAssert.assertAll();
         driver.close();
         driver.quit();
+
     }
 
 

@@ -32,11 +32,11 @@ public class MoisturizersPage extends BaseClass {
     public MoisturizersPage(WebDriver driver, WebDriverWait wait) {
         ldriver=driver;
         lwait=wait;
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(ldriver, this);
 
     }
 
-// Page Web elements locators (Object Repository)
+    // Page Web elements locators (Object Repository)
 
     List<String> newListPrice = new ArrayList<String>();
     List<Integer> newIntListPrice = new ArrayList<Integer>();
@@ -69,7 +69,7 @@ public class MoisturizersPage extends BaseClass {
         lwait.until(ExpectedConditions.visibilityOf(cartButton));
         cartButton.click();
         logger.info("Navigating to Cart page");
-        return new CartPage(ldriver,lwait).enterPaymentDetails();
+        return new CartPage(ldriver,lwait);//.enterPaymentDetails();
 
     }
 

@@ -25,7 +25,7 @@ public class ConfirmationPage extends BaseClass {
     public ConfirmationPage(WebDriver driver, WebDriverWait wait) {
         ldriver = driver;
         lwait = wait;
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(ldriver, this);
     }
 
 
@@ -33,47 +33,46 @@ public class ConfirmationPage extends BaseClass {
 
     @FindBy(xpath = "//h2[text()='PAYMENT SUCCESS']")
     @CacheLookup
-    private static WebElement successHeader;
+    private static WebElement successHeaderMessage;
+
+    @FindBy(xpath = "//h2")
+    @CacheLookup
+    private static WebElement HeaderMessageSection;
 
     @FindBy(xpath = "h2['PAYMENT FAILED']")
     @CacheLookup
-    private static WebElement failureHeader;
+    private static WebElement failureHeaderMessage;
 
     @FindBy(xpath = "//p[@class='text-justify']")
     @CacheLookup
     private static WebElement successMessage;
 
+    String url = "https://weathershopper.pythonanywhere.com/confirmation";
 
-    public String paymentIsSuccessorFailed()  {
-        String textFromMessage = null;
+    public String paymentIsSuccessorFailed() {
+        WaitForTitle("Confirmation",lwait);
+        String message = null;
+        checkJsStatus(ldriver);
 
-        try{
-            lwait.until(ExpectedConditions.visibilityOfAllElements(successHeader));
-        } catch (Exception e){
-            logger.error("Success Header not found" +e);
-        }
 
-        try{
-            lwait.until(ExpectedConditions.visibilityOfAllElements(failureHeader));
-        } catch (Exception e){
-            logger.error("Failure Header not found" +e);
-        }
+
 
         try {
+            lwait.until(ExpectedConditions.visibilityOfAllElements(HeaderMessageSection));
+            message = HeaderMessageSection.getText();
+           logger.info("___>>>>>>_____"+message);
 
-            if (successHeader.isDisplayed()){
+            if (message == "PAYMENT SUCCESS") {
+                successHeaderMessage.isDisplayed();
                 logger.info("Payment is Success");
-                textFromMessage = successHeader.getText();
-            }
-            else if(failureHeader.isDisplayed()){
+            } else if (message == "PAYMENT FAILED ") {
+                failureHeaderMessage.isDisplayed();
                 logger.info("Payment is Failed");
-                textFromMessage = failureHeader.getText();
-
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Failure Header not found" + e);
         }
-        return textFromMessage;
+        return message;
     }
 
 }

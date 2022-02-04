@@ -28,7 +28,7 @@ public class HomePage extends BaseClass {
     public HomePage(WebDriver driver, WebDriverWait wait) {
         ldriver=driver;
         lwait=wait;
-        PageFactory.initElements(driver, this);
+        PageFactory.initElements(ldriver, this);
     }
 
 
