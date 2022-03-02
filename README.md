@@ -16,11 +16,11 @@ All you need to do is to run the below command to build the project using Maven
 
 #### 1. Copy GitHub https URL
 ```bash
-git clone https://github.com/manishrajurkar87/weathershopper.git
+git clone https://github.com/manishrajurkar87/weathershopper_tdd_pom_testng_docker.git
 ```
 #### 2. Navigate to the location where pom.xml file is present
 ```bash
-cd weathershopper/  
+cd weathershopper_tdd_pom_testng_docker/  
 ```
 #### 3. Run maven command
 ```bash
